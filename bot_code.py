@@ -27,7 +27,11 @@ def get_workbook():
     #creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=scopes)
     # Get the JSON string from an environment variable
     service_account_info = json.loads(os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON'))
-    creds = service_account.Credentials.from_service_account_info(service_account_info)
+    #creds = service_account.Credentials.from_service_account_info(service_account_info)
+    creds = service_account.Credentials.from_service_account_info(
+        service_account_info,
+        scopes=scopes  # <--- CRITICAL: Don't forget this part!
+    )
     gc = gspread.authorize(creds)
     return gc.open_by_key(SHEET_ID)
 
