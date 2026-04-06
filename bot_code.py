@@ -9,6 +9,8 @@ import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 from newspaper import Article
+from dotenv import load_dotenv
+load_dotenv()
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(BOT_TOKEN)
