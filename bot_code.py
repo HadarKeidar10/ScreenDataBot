@@ -7,6 +7,7 @@ import requests
 import json
 import gspread
 from google.oauth2.service_account import Credentials
+from google.oauth2 import service_account
 from datetime import datetime
 from newspaper import Article
 from dotenv import load_dotenv
@@ -23,7 +24,10 @@ CREDENTIALS_FILE = "credentials.json"
 
 def get_workbook():
     scopes = ["https://www.googleapis.com/auth/spreadsheets"]
-    creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=scopes)
+    #creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=scopes)
+    # Get the JSON string from an environment variable
+    service_account_info = json.loads(os.getenv('GOOGLE_APPLICATION_CREDENTIALS_JSON'))
+    creds = service_account.Credentials.from_service_account_info(service_account_info)
     gc = gspread.authorize(creds)
     return gc.open_by_key(SHEET_ID)
 
